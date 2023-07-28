@@ -10,6 +10,7 @@
             <xpath expr="//field[@name='parent_id']" position="after">
                 <field name="ruc"/>
                 <field name="taxpayer_license"/>
+                <field name="municipality"/>
             </xpath>
 
         </field>
