@@ -1,8 +1,9 @@
 from odoo import models, fields
 
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
 
-    ruc = fields.Char('RUC', help='Registro Unico de Contribuyente')
-    taxpayer_license = fields.Char('N° de icencia', help='Numero de Licencia de Contribuyente')
-    ced_rif = fields.Char('Cedula / RIF')
+class ResPartner(models.Model):
+    _inherit = "res.partner"
+
+    ruc = fields.Char("RUC")
+    taxpayer_license = fields.Char("LAE")
+    ced_rif = fields.Char("Document/RIF")
