@@ -3,7 +3,7 @@
 {
     "name": "Tribute Fields",
     "version": "1.0.0",
-    "depends": ["base", "contacts"],
+    "depends": ["base", "contacts", "account"],
     "description": """
         Add the necessary fields for the Registry
         of Fiscal Information in other modules.
