@@ -13,7 +13,8 @@
     "license": "LGPL-3",
     "installable": True,
     "data": [
-        "views/res_company_view.xml",
-        "views/res_partner_view.xml",
+        "views/res_company_views.xml",
+        "views/res_partner_views.xml",
+        "views/account_move_views.xml",
     ],
 }
