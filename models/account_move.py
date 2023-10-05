@@ -9,7 +9,7 @@ class AccountMove(models.Model):
     @api.constrains("control_number")
     def check_control_number(self):
         for move in self:
-            if move.control_number:
+            if move.control_number and move.move_type in ['out_invoice','out_refund']:
                 try:
                     assert move.control_number.isdigit(), \
                     _("The number of the fiscal correlative must be an entire digit")
