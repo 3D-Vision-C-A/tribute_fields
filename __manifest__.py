@@ -3,12 +3,14 @@
 {
     'name': 'Tribute Fields',
     'version': '1.0.0',
-    'depends': ['base','contacts'],
+    'depends': ['base','contacts', 'account'],
     'description': "Agrega los campos RUC y LAE a los modelos Company y Partner",
     'license' : "LGPL-3",
     'installable' : True,
     'data': [
-        'views/res_company_view.xml',
-        'views/res_partner_view.xml',
+        'views/res_company_views.xml',
+        'views/res_partner_views.xml',
+        'views/account_move_views.xml',
+        'views/menu_views.xml',
     ]
 }

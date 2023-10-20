@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem
+    id="fiscal_reports_root_menu"
+    name="Fiscal Reports"
+    sequence="60"
+    parent="account.menu_finance_reports"
+    />
+
+</odoo>
