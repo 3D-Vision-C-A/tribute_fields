@@ -4,16 +4,33 @@
   <record id="view_move_form_inherit_tribute_fields" model="ir.ui.view">
     <field name="name">account.move.view.form.inherit</field>
     <field name="model">account.move</field>
-    <field name="inherit_id" ref="account.view_move_form"/>
+    <field name="inherit_id" ref="account.view_move_form" />
     <field name="arch" type="xml">
       <field name="ref" position="after">
+        <field name="fiscal_check" widget="boolean_toggle"
+          attrs="{'invisible': [('move_type','not in',['out_invoice','out_refund'])], 'readonly': [('state', '=', 'posted')]}" />
         <field name="control_number"
-          attrs="{'invisible': [('move_type','not in',['out_invoice','out_refund','in_invoice','in_refund'])]}"/>
+          attrs="{'invisible': [('move_type','not in',['out_invoice','out_refund'])], 'readonly': [('state', '=', 'posted')]}"
+        />
+        <label for="correlative_number" optional="show" string="Correlativo Fiscal"
+          attrs="{'invisible': [('fiscal_check','=',False)]}"
+        />
+        <div class="row" attrs="{'invisible': [('fiscal_check','=',False)]}">
+          <field class="oe_inline col-auto" name="correlative_prefix"
+            placeholder="Correlative prefix"
+            attrs="{'readonly': [('state', '=', 'posted')]}"
+          />
+          <field class="oe_inline col-auto" name="correlative_number"
+            placeholder="Correlative number"
+            attrs="{'readonly': [('state', '=', 'posted')]}"
+          />
+        </div>
+        <field name="fiscal_correlative" nolabel="1" />
+        <!-- <field name="control_number"
+          attrs="{'invisible': [('move_type','not
+        in',['out_invoice','out_refund','in_invoice','in_refund'])]}"/> -->
       </field>
     </field>
   </record>
 
 </odoo>
-
-
-
