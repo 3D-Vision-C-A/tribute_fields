@@ -7,4 +7,4 @@ class ResPartner(models.Model):
     ruc = fields.Char("RUC")
     taxpayer_license = fields.Char("LAE")
     ced_rif = fields.Char("Document/RIF")
-    is_legal_entity = fields.Boolean("IsLegalEntity", default=False)
+    is_legal_entity = fields.Boolean("Is Legal Entity", default=False)

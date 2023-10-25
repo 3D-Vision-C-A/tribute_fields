@@ -24,7 +24,7 @@
     <field name="inherit_id" ref="base.view_partner_tree"/>
     <field name="arch" type="xml">
       <field name="email" position="after">
-        <field name="is_legal_entity" widget="boolean_toggle"/>
+        <field name="is_legal_entity" widget="boolean_toggle "/>
       </field>
     </field>
   </record>
