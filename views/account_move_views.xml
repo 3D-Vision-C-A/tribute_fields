@@ -9,10 +9,15 @@
       <field name="ref" position="after">
         <field name="fiscal_check" widget="boolean_toggle"
           attrs="{'invisible': [('move_type','not in',['out_invoice','out_refund'])], 'readonly': [('state', '=', 'posted')]}" />
-        <field name="control_number"
+        <field name="control_number"/>
+        <field name="fiscal_correlative"/>
+        <!-- <field name="control_number"
           attrs="{'invisible': ['|',('move_type','not in',['out_invoice','out_refund']),('fiscal_check','=',False)], 'readonly': [('state', '=', 'posted')]}"
         />
-        <label for="correlative_number" optional="show" string="Correlativo Fiscal"
+        <field name="fiscal_correlative"
+          attrs="{'invisible': ['|',('move_type','not in',['out_invoice','out_refund']),('fiscal_check','=',False)], 'readonly': [('state', '=', 'posted')]}"
+        /> -->
+        <!-- <label for="correlative_number" optional="show" string="Correlativo Fiscal"
           attrs="{'invisible': [('fiscal_check','=',False)]}"
         />
         <div class="row" attrs="{'invisible': [('fiscal_check','=',False)]}">
@@ -25,7 +30,7 @@
             attrs="{'readonly': [('state', '=', 'posted')]}"
           />
           <field name="fiscal_correlative"/>
-        </div>
+        </div> -->
       </field>
     </field>
   </record>
