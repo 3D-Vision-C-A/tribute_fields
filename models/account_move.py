@@ -67,28 +67,29 @@ class AccountMove(models.Model):
 
     @api.constrains("fiscal_correlative", "control_number")
     def _constrains_fiscal_fields(self):
-        try:
-            if self.fiscal_check:
-                if self.move_type in CUSTOMER_DOCUMENTS:
-                    moves = self.env['account.move'].search([
-                        ('id', '!=', self.id),
-                        ('move_type', '=', self.move_type),
-                        ('fiscal_check', '=', self.fiscal_check),
-                        '|',
-                        ('control_number','!=',False),
-                        ('fiscal_correlative', '!=', False),
-                        '|',
-                        ('control_number', '=', self.control_number),
-                        ('fiscal_correlative', '=', self.fiscal_correlative),
-                    ])
+        if len(self) == 1:
+            try:
+                if self.fiscal_check:
+                    if self.move_type in CUSTOMER_DOCUMENTS:
+                        moves = self.env['account.move'].search([
+                            ('id', '!=', self.id),
+                            ('move_type', '=', self.move_type),
+                            ('fiscal_check', '=', self.fiscal_check),
+                            '|',
+                            ('control_number','!=',False),
+                            ('fiscal_correlative', '!=', False),
+                            '|',
+                            ('control_number', '=', self.control_number),
+                            ('fiscal_correlative', '=', self.fiscal_correlative),
+                        ])
 
-                    assert not moves, _(
-                        "The fiscal correlative and the control number must be unique, check the following documents: %s" % moves.mapped(
-                            "name")
+                        assert not moves, _(
+                            "The fiscal correlative and the control number must be unique, check the following documents: %s" % moves.mapped(
+                                "name")
+                        )
+                else:
+                    assert not (self.control_number or self.fiscal_correlative), _(
+                        "The 'Control Number' and 'Fiscal Correlative' fields are only for fiscal invoices"
                     )
-            else:
-                assert not (self.control_number or self.fiscal_correlative), _(
-                    "The 'Control Number' and 'Fiscal Correlative' fields are only for fiscal invoices"
-                )
-        except Exception as e:
-            raise UserError(str(e))
+            except Exception as e:
+                raise UserError(str(e))
