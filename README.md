@@ -9,7 +9,8 @@ Campos agregados:
 - **control_number**: para almacenar el número de control.
 - **fiscal_check:** para indicar si la factura es fiscal o no
 - **fiscal_correlative**: para almacenar el correlativo fiscal
-![Account_move](https://github.com/3D-Vision-C-A/tribute_fields/assets/96964600/df9c3f51-d047-4d50-82c7-e4a76707d560)
+![Account_move](https://github.com/3D-Vision-C-A/tribute_fields/assets/96964600/7eb2688b-10b5-4312-abf6-9f2be029a029)
+
 
 **ResCompany:** Extiende la funcionalidad del modelo res.company. Representa la información de la compañía en el sistema.Agrega tres nuevos campos a este modelo: ruc, taxpayer_license y municipality
 ![ResCompany](https://github.com/3D-Vision-C-A/tribute_fields/assets/96964600/b35bb1c1-225c-4110-a6db-6f9efe183776)
