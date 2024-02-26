@@ -12,10 +12,12 @@ class AccountMove(models.Model):
     control_number = fields.Char("Control Number", copy=False)
     fiscal_check = fields.Boolean("Is Fiscal", default=False, copy=False)
     fiscal_correlative = fields.Char("Fiscal Correlative", copy=False)
+    show_fiscal_fields = fields.Boolean(related="company_id.show_fiscal_fields")
 
     @api.onchange('fiscal_check')
-    def onchange_fiscal_check(self):
-
+    def _onchange_fiscal_check(self):
+        print("\n\n***********************************************************\n\n")
+        print("fiscal_check:", self.fiscal_check)
         def get_max_sequence(sequence_list):
             max_num = -1
             max_sequence = None

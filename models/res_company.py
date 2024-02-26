@@ -6,3 +6,4 @@ class ResCompany(models.Model):
     ruc = fields.Char('RUC')
     taxpayer_license = fields.Char('LAE')
     municipality = fields.Char('Municipality')
+    show_fiscal_fields = fields.Boolean('Show Fiscal Fields', default=True)
