@@ -7,10 +7,11 @@
     <field name="inherit_id" ref="account.view_move_form" />
     <field name="arch" type="xml">
       <field name="ref" position="after">
+        <field name="show_fiscal_fields" invisible="1" />
         <field name="fiscal_check" widget="boolean_toggle"
-          attrs="{'invisible': [('move_type','in',['entry', 'out_receipt', 'in_receipt'])], 'readonly': [('state', '=', 'posted')]}" />
-        <field name="control_number" attrs="{'invisible': [('move_type','in',['entry', 'out_receipt', 'in_receipt'])], 'readonly': [('state', '=', 'posted')]}" />
-        <field name="fiscal_correlative" attrs="{'invisible': [('move_type','in',['entry', 'out_receipt', 'in_receipt'])], 'readonly': [('state', '=', 'posted')]}" />
+          attrs="{'invisible': ['|',('move_type','in',['entry', 'out_receipt', 'in_receipt']),('show_fiscal_fields', '=', False)], 'readonly': [('state', '=', 'posted')]}" />
+        <field name="control_number" attrs="{'invisible': ['|',('move_type','in',['entry', 'out_receipt', 'in_receipt']),('show_fiscal_fields', '=', False)], 'readonly': [('state', '=', 'posted')]}" />
+        <field name="fiscal_correlative" attrs="{'invisible': ['|',('move_type','in',['entry', 'out_receipt', 'in_receipt']), ('show_fiscal_fields','=', False)], 'readonly': [('state', '=', 'posted')]}" />
       </field>
     </field>
   </record>
@@ -21,9 +22,9 @@
     <field name="inherit_id" ref="account.view_invoice_tree"/>
     <field name="arch" type="xml">
       <field name="name" position="after">
-        <field name="fiscal_check" widget="boolean_toggle" readonly="1"/>
-        <field name="fiscal_correlative"/>
-        <field name="control_number"/>
+        <field name="fiscal_check" widget="boolean_toggle" readonly="1" optional="show"/>
+        <field name="fiscal_correlative" optional="show"/>
+        <field name="control_number" optional="show"/>
       </field>
     </field>
   </record>
