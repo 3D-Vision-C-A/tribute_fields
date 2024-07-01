@@ -16,8 +16,6 @@ class AccountMove(models.Model):
 
     @api.onchange('fiscal_check')
     def _onchange_fiscal_check(self):
-        print("\n\n***********************************************************\n\n")
-        print("fiscal_check:", self.fiscal_check)
         def get_max_sequence(sequence_list):
             max_num = -1
             max_sequence = None
