@@ -13,7 +13,7 @@
           </div>
           <div class="o_setting_right_pane">
             <label for="show_fiscal_fields"/>
-            <span class="fa fa-lg fa-building-o"/>
+            <span class="fa fa-lg fa-building-o" title="Show Fiscal Fields"/>
             <div class="text-muted">
                 Enable fields for the registration of the fiscal Control and Correlative Number
             </div>
