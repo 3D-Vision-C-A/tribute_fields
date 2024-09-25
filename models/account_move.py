@@ -10,9 +10,25 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     control_number = fields.Char("Control Number", copy=False)
-    fiscal_check = fields.Boolean("Is Fiscal", default=False, copy=False)
+    fiscal_check = fields.Boolean(
+        "Is Fiscal",
+        default=False,
+        copy=False,
+        compute="_compute_fiscal_check",
+        readonly=False,
+        store=True
+    )
     fiscal_correlative = fields.Char("Fiscal Correlative", copy=False)
     show_fiscal_fields = fields.Boolean(related="company_id.show_fiscal_fields")
+    ticket_ref = fields.Char("Ticket reference", readonly=True)
+    fp_serial_num = fields.Char("Serial number FP", readonly=True)
+    num_report_z = fields.Char("Numero de reporte Z", readonly=True)
+
+
+    @api.depends("fp_serial_num")
+    def _compute_fiscal_check(self):
+        for invoice in self:
+            invoice.fiscal_check = bool(invoice.fp_serial_num)
 
     @api.onchange('fiscal_check')
     def onchange_fiscal_check(self):
@@ -48,7 +64,7 @@ class AccountMove(models.Model):
             new_sequence.reverse()
             return "".join(new_sequence)
 
-        if self.fiscal_check:
+        if self.fiscal_check and not self.fp_serial_num:
             if self.move_type in CUSTOMER_DOCUMENTS:
                 moves = self.env['account.move'].search([
                     ('fiscal_check', '=', True),

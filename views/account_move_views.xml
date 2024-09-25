@@ -26,6 +26,9 @@
         <field name="fiscal_check" widget="boolean_toggle" readonly="1" optional="show"/>
         <field name="fiscal_correlative" optional="show"/>
         <field name="control_number" optional="show"/>
+        <field name="ticket_ref" optional="show"/>
+        <field name="fp_serial_num" optional="show"/>
+        <field name="num_report_z" optional="show"/>
       </field>
     </field>
   </record>
