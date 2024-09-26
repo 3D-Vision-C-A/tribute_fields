@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from collections import defaultdict
 import re
 
 CUSTOMER_DOCUMENTS = ['out_invoice','out_refund']
@@ -81,6 +82,55 @@ class AccountMove(models.Model):
         else:
             self.control_number = None
             self.fiscal_correlative = None
+
+
+    def get_payments_for_fiscal_machine(self):
+        invoice_list = list()
+        for invoice in self:
+
+            def _get_rate_to_fiscal_currency(from_currency):
+                return self.env["res.currency"]._get_conversion_rate(
+                    from_currency=from_currency,
+                    to_currency=self.env.ref("base.VEF"),
+                    company=invoice.company_id,
+                    date=fields.Date.today()
+                )
+
+            rml = invoice._get_all_reconciled_invoice_partials()
+            invoice_item = {
+                "id": invoice.id,
+                "name": invoice.name,
+                "payments": []
+            }
+
+            # Tomamos los metodos de pago de Facturación
+            for ml in rml:
+                if ml["aml"].journal_id.type in ["bank", "cash"]:
+                    invoice_item["payments"].append({
+                        "journal_id": ml["aml"].journal_id.id,
+                        "payment_method": ml["aml"].journal_id.name,
+                        "amount": ml["amount"],
+                        "currency": {
+                            "name": ml["currency"].name,
+                            "rate": _get_rate_to_fiscal_currency(ml["currency"])
+                        }
+                    })
+
+            # Tomamos los pagos provenientes del PoS
+            if hasattr(invoice, "pos_order_ids"):
+                invoice_item["payments"] += [{
+                    "journal_id": pos_payment.payment_method_id.journal_id.id,
+                    "payment_method": pos_payment.payment_method_id.journal_id.name,
+                    "amount": pos_payment.amount,
+                    "currency": {
+                        "name": pos_payment.currency_id.name,
+                        "rate": _get_rate_to_fiscal_currency(pos_payment.currency_id)
+                    }
+                } for pos_payment in invoice.mapped("pos_order_ids.payment_ids")]
+
+            invoice_list.append(invoice_item)
+        return invoice_list
+
 
     @api.constrains("fiscal_correlative", "control_number")
     def _constrains_fiscal_fields(self):
