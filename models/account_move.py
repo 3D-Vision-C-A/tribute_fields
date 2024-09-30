@@ -20,7 +20,7 @@ class AccountMove(models.Model):
         store=True
     )
     fiscal_correlative = fields.Char("Fiscal Correlative", copy=False)
-    show_fiscal_fields = fields.Boolean(related="company_id.show_fiscal_fields")
+    invoice_print_method = fields.Selection(related="company_id.invoice_print_method")
     ticket_ref = fields.Char("Ticket reference", readonly=True)
     fp_serial_num = fields.Char("Serial number FP", readonly=True)
     num_report_z = fields.Char("Numero de reporte Z", readonly=True)
@@ -91,7 +91,7 @@ class AccountMove(models.Model):
             def _get_rate_to_fiscal_currency(from_currency):
                 return self.env["res.currency"]._get_conversion_rate(
                     from_currency=from_currency,
-                    to_currency=self.env.ref("base.VEF"),
+                    to_currency=invoice.company_id.fiscal_currency_id or self.env.ref("base.VEF"),
                     company=invoice.company_id,
                     date=fields.Date.today()
                 )
