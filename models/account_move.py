@@ -132,6 +132,22 @@ class AccountMove(models.Model):
         return invoice_list
 
 
+    def get_origin_invoice_fiscal_data(self):
+        res = []
+        for invoice in self:
+            assert invoice.reversed_entry_id.fp_serial_num, "The %s invoice does not have the field 'FP_Serial_num'" %invoice.reversed_entry_id.name
+            assert invoice.reversed_entry_id.ticket_ref, "The %s invoice does not have the 'ticket_ref' field" %invoice.reversed_entry_id.name
+
+            res.append({
+                invoice.name: {
+                    "ticket_ref": invoice.reversed_entry_id.ticket_ref,
+                    "fp_serial_num": invoice.reversed_entry_id.fp_serial_num,
+                    "invoice_date": invoice.reversed_entry_id.invoice_date,
+                }
+            })
+        return res
+
+
     @api.constrains("fiscal_correlative", "control_number")
     def _constrains_fiscal_fields(self):
         if len(self) == 1:
