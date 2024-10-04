@@ -139,11 +139,9 @@ class AccountMove(models.Model):
             assert invoice.reversed_entry_id.ticket_ref, "The %s invoice does not have the 'ticket_ref' field" %invoice.reversed_entry_id.name
 
             res.append({
-                invoice.name: {
-                    "ticket_ref": invoice.reversed_entry_id.ticket_ref,
-                    "fp_serial_num": invoice.reversed_entry_id.fp_serial_num,
-                    "invoice_date": invoice.reversed_entry_id.invoice_date,
-                }
+                "ticket_ref": invoice.reversed_entry_id.ticket_ref,
+                "fp_serial_num": invoice.reversed_entry_id.fp_serial_num,
+                "invoice_date": invoice.reversed_entry_id.invoice_date,
             })
         return res
 
