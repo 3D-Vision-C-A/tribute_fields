@@ -109,7 +109,7 @@ class AccountMove(models.Model):
                     invoice_item["payments"].append({
                         "journal_id": ml["aml"].journal_id.id,
                         "payment_method": ml["aml"].journal_id.name,
-                        "amount": ml["amount"],
+                        "amount": abs(ml["amount"]),
                         "currency": {
                             "name": ml["currency"].name,
                             "rate": _get_rate_to_fiscal_currency(ml["currency"])
@@ -121,7 +121,7 @@ class AccountMove(models.Model):
                 invoice_item["payments"] += [{
                     "journal_id": pos_payment.payment_method_id.journal_id.id,
                     "payment_method": pos_payment.payment_method_id.journal_id.name,
-                    "amount": pos_payment.amount,
+                    "amount": abs(pos_payment.amount),
                     "currency": {
                         "name": pos_payment.currency_id.name,
                         "rate": _get_rate_to_fiscal_currency(pos_payment.currency_id)
